@@ -73,13 +73,14 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.netcode.gameobjects": {
-      "version": "file:C:/Users/lpmc2/Downloads/import/VR-Game/Go Out/com.unity.netcode.gameobjects-ngo-1.0.2/com.unity.netcode.gameobjects-ngo-1.0.2/com.unity.netcode.gameobjects",
+      "version": "1.0.2",
       "depth": 0,
-      "source": "local",
+      "source": "registry",
       "dependencies": {
         "com.unity.nuget.mono-cecil": "1.10.1",
         "com.unity.transport": "1.2.0"
-      }
+      },
+      "url": "https://packages.unity.com"
     },
     "com.unity.nuget.mono-cecil": {
       "version": "1.10.1",
