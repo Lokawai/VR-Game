@@ -30,6 +30,7 @@ public class NetworkPlayer : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (IsOwner)
         {
             root.position = VRRigReferences.Singleton.Root.position;
