@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public static class ItemManager
@@ -23,9 +24,17 @@ public static class ItemManager
             return itemData;
         }
     }
+    public static void ServerRemoveChilds(GameObject parentObject)
+    {
+        NetworkObjectManager networkObjectSpawner = NetworkObjectManager.Singleton;
+        foreach(Transform child in parentObject.transform)
+        {
+            networkObjectSpawner.DestroyObject(child.gameObject.GetComponent<NetworkObject>());
+        }
+    }
     public static void removeChilds(GameObject parentObject)
     {
-        foreach(Transform child in parentObject.transform)
+        foreach (Transform child in parentObject.transform)
         {
             GameObject.Destroy(child.gameObject);
         }

@@ -5,12 +5,15 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using Unity.Netcode;
+
 
 public enum InventoryType
 {
     item,
     block
 }
+
 public class InventoryBehaviour : MonoBehaviour
 {
     [Header("Toggle")]
@@ -46,6 +49,7 @@ public class InventoryBehaviour : MonoBehaviour
     [SerializeField] private GameObject slotObject;
     [SerializeField] private GameObject placeItemLocation;
     [SerializeField] private int[] initialSlotItem;
+    NetworkObjectManager networkObjectSpawner;
     [Header("Drop Settings")]
     [SerializeField] private GameObject dropItemPrefab;
     [SerializeField] private float dropForce = 10f;
@@ -66,7 +70,7 @@ public class InventoryBehaviour : MonoBehaviour
     {
         StartCursorState();
         itemData = ItemManager.ItemData;
-
+        networkObjectSpawner = NetworkObjectManager.Singleton;
     }
     
     private void OnValidate()
@@ -366,10 +370,16 @@ public class InventoryBehaviour : MonoBehaviour
             childImg.sprite = slotImageNormal;
         }
     }
-
+    [ServerRpc]
     public void EquipItem(int slotId)
     {
-        ItemManager.removeChilds(placeItemLocation);
+        if (placeItemLocation.transform.childCount > 1)
+        {
+            ItemManager.ServerRemoveChilds(placeItemLocation);
+        } else if(placeItemLocation.transform.childCount == 1) //Saftey Issue
+        {
+            networkObjectSpawner.DestroyObject(placeItemLocation.transform.GetChild(0).GetComponent<NetworkObject>());
+        }
         resetSelectUI();
         if (selectedSlot != slotId)
         {
@@ -383,17 +393,25 @@ public class InventoryBehaviour : MonoBehaviour
             switch (inventoryType)
             {
                 case InventoryType.item:
-                    targetItem = Instantiate(itemData.item[invId].itemObject, placeItemLocation.transform.position, Quaternion.identity);
-                    targetItem.transform.position += itemData.item[invId].itemObject.transform.position;
-                    Debug.Log("Rotation:" + targetItem.transform.rotation + "/" + itemData.item[invId].itemObject.transform.rotation);
-                    targetItem.transform.rotation = itemData.item[invId].itemObject.transform.rotation;
-                    Debug.Log("After Rotation:" + targetItem.transform.rotation + "/" + itemData.item[invId].itemObject.transform.rotation);
+                    targetItem = networkObjectSpawner.SpawnObject(itemData.item[invId].itemObject, placeItemLocation.transform.position, Quaternion.identity);
+                    //targetItem.transform.position += itemData.item[invId].itemObject.transform.position;
+                    if(targetItem == null)
+                    {
+                        Debug.Log("Failed to get the TargetItem" + "Try to get item: " + networkObjectSpawner.spawnedObj);
+                        targetItem = networkObjectSpawner.spawnedObj;
+                    }
+                    //targetItem.transform.rotation = itemData.item[invId].itemObject.transform.rotation;
+                    networkObjectSpawner.ChangePosition(targetItem.transform.position + itemData.item[invId].itemObject.transform.position, targetItem.transform);
+                    networkObjectSpawner.ChangeRotation(itemData.item[invId].itemObject.transform.rotation, targetItem.transform);
                     break;
                 case InventoryType.block:
                    
                  break;
             }
-            targetItem.transform.SetParent(placeItemLocation.transform);
+            NetworkObject networkObject = targetItem.GetComponent<NetworkObject>();
+            NetworkObject placeItemNetworkObj = placeItemLocation.GetComponent<NetworkObject>();
+            
+            networkObjectSpawner.SetParent(networkObject, placeItemNetworkObj);
             Collider itemCollider = targetItem.GetComponent<Collider>();
             if (itemCollider != null)
             {
@@ -406,6 +424,8 @@ public class InventoryBehaviour : MonoBehaviour
         StartFadeInText(slotId);
 
     }
+
+
     private void setSlotObjUI(int id, GameObject slotPH, GameObject slotObj)
     {
         if (id < slotPH.transform.childCount)

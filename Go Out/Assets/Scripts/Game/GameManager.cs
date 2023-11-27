@@ -7,6 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Singleton;
     [SerializeField]
     private GameObject m_XROrigin;
     private float originMoveSpeed;
@@ -19,12 +20,19 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject player;
     DynamicMoveProvider dynamicMove;
+    public static NetworkObjectManager objectSpawner;
     // Start is called before the first frame update
     void Start()
     {
         dynamicMove = m_XROrigin.GetComponent<DynamicMoveProvider>();
         originMoveSpeed = dynamicMove.moveSpeed;
         dynamicMove.moveSpeed = 0f;
+        
+    }
+    private void Awake()
+    {
+        Singleton = this;
+        objectSpawner = GetComponent<NetworkObjectManager>();
     }
     public void StartGame()
     {
