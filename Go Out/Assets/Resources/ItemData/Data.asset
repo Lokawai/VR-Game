@@ -19,3 +19,6 @@ MonoBehaviour:
   - itemObject: {fileID: 4511655667520406305, guid: 087e2a9d318d8b842b11b221d1f79534, type: 3}
     itemName: Pistol
     itemSprite: {fileID: 0}
+  - itemObject: {fileID: 3782683864803414515, guid: c1d1ac8642375e44492c19ff85c58ff4, type: 3}
+    itemName: Grabber
+    itemSprite: {fileID: 0}
