@@ -3707,6 +3707,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &574341832 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8894362410822019373, guid: 3141cd6eeb2926a4994fac1436ee2223, type: 3}
+  m_PrefabInstance: {fileID: 8894362411391904741}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &574341835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574341832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31ea1df739ce47b4b8b30a839cbb5629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &605233788
 GameObject:
   m_ObjectHideFlags: 0
@@ -9422,10 +9439,12 @@ GameObject:
   - component: {fileID: 1441206548}
   - component: {fileID: 1441206547}
   - component: {fileID: 1441206549}
+  - component: {fileID: 1441206550}
+  - component: {fileID: 1441206551}
   m_Layer: 0
-  m_Name: Network Manager
+  m_Name: Network & Game Manager
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -9520,6 +9539,38 @@ MonoBehaviour:
     PacketDelayMS: 0
     PacketJitterMS: 0
     PacketDropRate: 0
+--- !u!114 &1441206550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441206546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 431050c4db4c5ec4791038a2afb38909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_XROrigin: {fileID: 1507723919}
+  m_networkManager: {fileID: 1441206547}
+  networkData: {fileID: 11400000, guid: fc152556808de3f4bb74700f926c5e50, type: 2}
+  startPosition: {x: -8.001, y: -0.15, z: -9.023}
+  player: {fileID: 1507723919}
+--- !u!114 &1441206551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441206546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98a9d1e5d839bf459b1779326365b36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sceneToLoad:
+  - Start
+  m_loadScenesWhenStart: 1
 --- !u!1 &1447038228
 GameObject:
   m_ObjectHideFlags: 0
@@ -15891,7 +15942,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8894362410822019373, guid: 3141cd6eeb2926a4994fac1436ee2223, type: 3}
       propertyPath: m_Name
-      value: Game Manager
+      value: Object Manager
       objectReference: {fileID: 0}
     - target: {fileID: 8894362410822019374, guid: 3141cd6eeb2926a4994fac1436ee2223, type: 3}
       propertyPath: player
@@ -15949,5 +16000,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8894362410822019374, guid: 3141cd6eeb2926a4994fac1436ee2223, type: 3}
+    - {fileID: 8894362410822019372, guid: 3141cd6eeb2926a4994fac1436ee2223, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3141cd6eeb2926a4994fac1436ee2223, type: 3}
