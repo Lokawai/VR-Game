@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,7 +22,34 @@ public class GameManager : MonoBehaviour
     private GameObject player;
     DynamicMoveProvider dynamicMove;
     public static NetworkObjectManager objectSpawner;
+    public List<GameObject> currentPlayers = new List<GameObject>();
+    [SerializeField]
+    private TMP_Text ipAddress;
+    public void SetIpAddressText(string address)
+    {
+        ipAddress.text = "IP: " + address;
+    }
+    public void SetPlayers( )
+    {
+        currentPlayers.Clear();
+        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Player");
+        foreach(GameObject targetGameObject in gameObjects)
+        {
+            if(targetGameObject.GetComponent<NetworkPlayer>() != null)
+            {
+                currentPlayers.Add(targetGameObject);
+            }
+        }
+        NetworkObjectManager.Singleton.UpdateManager(this);
+    }
     // Start is called before the first frame update
+    public NetworkVariable<int> PlayerID { get {return playerId; }}
+    public void AddPlayerId() 
+    {
+        playerId.Value++;
+    }
+
+    private NetworkVariable<int> playerId =  new NetworkVariable<int>();
     void Start()
     {
         dynamicMove = m_XROrigin.GetComponent<DynamicMoveProvider>();

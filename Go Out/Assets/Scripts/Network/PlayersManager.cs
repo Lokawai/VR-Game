@@ -25,6 +25,8 @@ public class PlayersManager : NetworkSingleton<PlayersManager>
             {
                 //Logger.Instance.LogInfo($"Player 1 just connected...");
                 playersInGame.Value++;
+                GameManager.Singleton.SetPlayers();
+
             }
         };
         NetworkManager.Singleton.OnClientConnectedCallback += (id) =>
@@ -33,6 +35,7 @@ public class PlayersManager : NetworkSingleton<PlayersManager>
             {
                 //Logger.Instance.LogInfo($"Player {id+1} just connected...");
                 playersInGame.Value++;
+                GameManager.Singleton.SetPlayers();
             }
         };
 
@@ -42,6 +45,7 @@ public class PlayersManager : NetworkSingleton<PlayersManager>
             {
                 //Logger.Instance.LogInfo($"Player {id+1} just disconnected...");
                 playersInGame.Value--;
+                GameManager.Singleton.SetPlayers();
             }
         };
     }

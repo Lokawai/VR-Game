@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.Netcode;
 public class NetworkPlayer : NetworkBehaviour
 {
+    public int PlayerID = 0;
     [SerializeField]
     private Transform root;
     [SerializeField]
@@ -26,7 +27,10 @@ public class NetworkPlayer : NetworkBehaviour
         }
     }
 
-
+    private void Start()
+    {
+        PlayerID = (int)OwnerClientId;
+    }
     // Update is called once per frame
     void Update()
     {

@@ -64,30 +64,40 @@ public class NetworkObjectManager : NetworkBehaviour
     {
         targetToDestroy.Despawn();
     }
-    Vector3 targetPosition;
-    Quaternion targetRotation;
+    NetworkVariable<Vector3> targetPosition = new NetworkVariable<Vector3>();
+    NetworkVariable<Vector3> targetRotation = new NetworkVariable<Vector3>();
     Transform targetTransform;
     public void ChangePosition(Vector3 finalPos, Transform transform)
     {
-        targetPosition = finalPos;
+        targetPosition.Value = finalPos;
         targetTransform = transform;
         ChangePosServerRpc();
     }
-    public void ChangeRotation(Quaternion finalRotation, Transform transform)
+    public void ChangeRotation(Vector3 finalRotation, Transform transform)
     {
-        targetRotation = finalRotation;
+        targetRotation.Value = finalRotation;
         targetTransform = transform;
         ChangeRotServerRpc();
     }
     [ServerRpc(RequireOwnership = false)]
     private void ChangePosServerRpc()
     {
-        targetTransform.position = targetPosition;
+        targetTransform.position = targetPosition.Value;
     }
     [ServerRpc(RequireOwnership = false)]
     private void ChangeRotServerRpc()
     {
-        targetTransform.rotation = targetRotation;
+        targetTransform.Rotate(targetRotation.Value, Space.World);
+    }
+    GameManager targetGameManager;
+    public void UpdateManager(GameManager gameManager)
+    {
+        targetGameManager = gameManager;
+    }
+    [ServerRpc]
+    private void UpdateManagerServerRpc()
+    {
+        GameManager.Singleton = targetGameManager;
     }
 }
 
