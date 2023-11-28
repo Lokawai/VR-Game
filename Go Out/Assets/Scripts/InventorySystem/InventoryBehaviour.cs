@@ -402,7 +402,7 @@ public class InventoryBehaviour : MonoBehaviour
                     }
                     //targetItem.transform.rotation = itemData.item[invId].itemObject.transform.rotation;
                     networkObjectSpawner.ChangePosition(targetItem.transform.position + itemData.item[invId].itemObject.transform.position, targetItem.transform);
-                    networkObjectSpawner.ChangeRotation(itemData.item[invId].itemObject.transform.rotation, targetItem.transform);
+                    networkObjectSpawner.ChangeRotation(new Vector3(itemData.item[invId].itemObject.transform.rotation.x, itemData.item[invId].itemObject.transform.rotation.y, itemData.item[invId].itemObject.transform.rotation.z), targetItem.transform);
                     break;
                 case InventoryType.block:
                    
