@@ -25,5 +25,6 @@ public class MultipleSceneManager : MonoBehaviour
             if(sceneName != null || sceneName != "")
             SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         }
+        Destroy(gameObject);
     }
 }
