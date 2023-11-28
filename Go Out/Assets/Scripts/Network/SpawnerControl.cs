@@ -24,4 +24,5 @@ public class SpawnerControl : NetworkSingleton<SpawnerControl>
 
         }
     }
+
 }
