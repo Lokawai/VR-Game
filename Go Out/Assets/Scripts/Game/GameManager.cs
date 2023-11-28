@@ -53,8 +53,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         dynamicMove = m_XROrigin.GetComponent<DynamicMoveProvider>();
-        originMoveSpeed = dynamicMove.moveSpeed;
-        dynamicMove.moveSpeed = 0f;
+        //originMoveSpeed = dynamicMove.moveSpeed;
+        //dynamicMove.moveSpeed = 0f;
         
     }
     private void Awake()
