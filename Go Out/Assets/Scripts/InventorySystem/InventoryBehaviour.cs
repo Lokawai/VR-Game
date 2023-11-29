@@ -393,6 +393,7 @@ public class InventoryBehaviour : MonoBehaviour
             switch (inventoryType)
             {
                 case InventoryType.item:
+                    Debug.Log(itemData.item[invId].itemObject);
                     targetItem = networkObjectSpawner.SpawnObject(itemData.item[invId].itemObject, placeItemLocation.transform.position, Quaternion.identity);
                     //targetItem.transform.position += itemData.item[invId].itemObject.transform.position;
                     if(targetItem == null)

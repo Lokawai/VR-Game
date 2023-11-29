@@ -44,7 +44,7 @@ public class NetworkObjectManager : NetworkBehaviour
     public void SpawnObjServerRpc()
     {
         NetworkObject networkObject = Instantiate(obj, pos, quaternion);
-        Debug.Log(networkObject.gameObject);
+       
         spawnedObj = networkObject.gameObject;
         networkObject.SpawnAsPlayerObject(OwnerClientId);
     }

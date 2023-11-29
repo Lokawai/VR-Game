@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class GunController : MonoBehaviour
 {
@@ -74,6 +75,7 @@ public class GunController : MonoBehaviour
     [SerializeField] private AudioClip ReloadSound;
     [HideInInspector]public bool isOut = false;
     private GameObject Player;
+    [SerializeField]
     private InventoryBehaviour Inventory;
     private float ReloadCD = 0;
     private bool isActive = false;
@@ -156,27 +158,17 @@ public class GunController : MonoBehaviour
     {
         return isActive;
     }
-    private void Awake()
-    {
-        m_GunInputActions = new GunInputs();
-        gunActions = m_GunInputActions.Weapon;
-        gunActions.Fire.performed += ctx => StartCoroutine(Shoot());
-        gunActions.Reload.performed += ctx => ReloadDetect();
-    }
-    private void OnEnable()
-    {
-        gunActions.Enable();
-    }
-    private void OnDisable()
-    {
-        gunActions.Disable();
-    }
+
+
     private void Start()
     {
+        XRGrabInteractable grabInteractable = gameObject.GetComponent<XRGrabInteractable>();
+        grabInteractable.activated.AddListener(x =>  ShootDetect() );
+        //grabInteractable.deactivated.AddListener(x => StopCoroutine(Shoot()));
         cameraTransform = transform.parent;
-        Player = GameObject.Find("FPSController");
-        Inventory = Player.GetComponent<InventoryBehaviour>();
+
         GetSound();
+        if(MuzzleFlash != null)
         MuzzleFlash.Stop();
         OriginalPosition = transform.localPosition;
 
@@ -194,6 +186,7 @@ public class GunController : MonoBehaviour
         audioSource.volume *= Volume;
 
     }
+
     private void Update()
     {
         if (!isRecoiling)
@@ -207,6 +200,7 @@ public class GunController : MonoBehaviour
             currentRecoilAngle = Mathf.Lerp(currentRecoilAngle, 0f, recoilSpeed * Time.deltaTime);
             isRecoiling = currentRecoilAngle > 0f; // Set the flag to false if the recoil angle has reached 0
         }
+        if(cameraTransform != null)
         cameraTransform.Rotate(Vector3.left, currentRecoilAngle);
         if (isOut == false && RemainAmmo <=0 && TotalAmmo <= 0)
         {
@@ -224,7 +218,11 @@ public class GunController : MonoBehaviour
         }
         if (isActive == true)
         {
-            ShootDetect();
+            //ShootDetect();
+            if (isShoot == true)
+            {
+                fireCoolDown();
+            }
             ReloadDetect();
             Reload();
             //Aim();
@@ -262,12 +260,9 @@ public class GunController : MonoBehaviour
             isReload = true;
         }
     }
-    private void ShootDetect()
+    public void ShootDetect()
     {
-        if(isShoot == true)
-        {
-            fireCoolDown();
-        }
+        Debug.Log("Fire");
         if (ReloadCD <= 0 && ShootingCD <= 0 && RemainAmmo > 0 && !isShoot && !isReload)
         {
 
@@ -331,7 +326,7 @@ public class GunController : MonoBehaviour
                 {
                     audioSource.clip = null;
                 }
-                InventoryBehaviour inventoryBehaviour = GameObject.Find("FPSController").GetComponent<InventoryBehaviour>();
+
 
                 isReload = false;
             }
@@ -408,7 +403,7 @@ public class GunController : MonoBehaviour
     }
    
 
-    private IEnumerator Shoot()
+    public IEnumerator Shoot()
     {
         ShootFunction.Invoke();
         isShoot = true;
@@ -467,10 +462,7 @@ public class GunController : MonoBehaviour
             if (Physics.Raycast(FirePoint.transform.position, spreadDirection, out hit, Range, layerMask))
             {
                 HitFunction.Invoke(hit.collider.gameObject);
-                if (hit.collider.CompareTag("Projectile"))
-                {
-                    continue;
-                }
+
                 
                 if (hit.collider.CompareTag("Wall"))
                 {
@@ -519,8 +511,8 @@ public class GunController : MonoBehaviour
             }
         }
         
-        
-        StartCoroutine(StartRecoil());
+        //if(anim)
+        //StartCoroutine(StartRecoil());
         yield return new WaitForSeconds(ShootingTime*0.1f);
         if (MuzzleFlash != null)
         {
@@ -535,7 +527,7 @@ public class GunController : MonoBehaviour
             hitEnemies.Clear();
 
         fireTimer = 0f;
-       
+
         //Update the Inventory UI
        
     }
