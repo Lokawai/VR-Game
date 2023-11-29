@@ -5,26 +5,28 @@ using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 using TMPro;
+using UnityEngine.Events;
 
-public class GameManager : MonoBehaviour
+public class GameManager : NetworkBehaviour
 {
+    public GManager gManager;
     public static GameManager Singleton;
     [SerializeField]
-    private GameObject m_XROrigin;
-    private float originMoveSpeed;
+    private GameObject m_XROrigin = default;
+    private float originMoveSpeed = default;
     [SerializeField]
-    private NetworkManager m_networkManager;
+    private NetworkManager m_networkManager = default;
     [SerializeField]
-    private NetworkSO networkData;
+    private NetworkSO networkData = default;
     [SerializeField]
-    private Vector3 startPosition;
+    private Vector3 startPosition = default;
     [SerializeField]
-    private GameObject player;
-    DynamicMoveProvider dynamicMove;
-    public static NetworkObjectManager objectSpawner;
+    private GameObject player = default;
+    DynamicMoveProvider dynamicMove = default;
+    public static NetworkObjectManager objectSpawner = default;
     public List<GameObject> currentPlayers = new List<GameObject>();
     [SerializeField]
-    private TMP_Text ipAddress;
+    private TMP_Text ipAddress = default;
     public void SetIpAddressText(string address)
     {
         ipAddress.text = "IP: " + address;
@@ -98,3 +100,15 @@ public class GameManager : MonoBehaviour
         }
     }
 }
+[System.Serializable]
+public struct GManager 
+{
+    public NetworkVariable<int> StageLevel;
+    [Header("Unity Event Functions must be void\nNote: Each Element is a different stage")]
+    [SerializeField]
+    private UnityEvent[] m_StartStageEvent;
+    [SerializeField]
+    private UnityEvent[] m_LoopingStageEvent;
+    
+}
+
