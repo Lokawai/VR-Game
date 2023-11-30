@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
-
+using TMPro;
 public class GunController : MonoBehaviour
 {
 
@@ -15,7 +15,9 @@ public class GunController : MonoBehaviour
     [SerializeField]
     private GunInputs m_GunInputActions;
     private GunInputs.WeaponActions gunActions;
-
+    [Header("Display Settings")]
+    [SerializeField]
+    private TMP_Text AmmoDisplayText;
     [Header("Gun Clip Settings")]
 
 
@@ -26,6 +28,7 @@ public class GunController : MonoBehaviour
     [SerializeField] private int RemainAmmo;
     [SerializeField] private float ReloadingTime;
     [SerializeField] private UnityEvent ReloadFunction;
+    [SerializeField] private bool hasInfiniteAmmo = false;
 
     [Header("Gun Attack Settings")]
     [SerializeField]
@@ -79,6 +82,10 @@ public class GunController : MonoBehaviour
     private InventoryBehaviour Inventory;
     private float ReloadCD = 0;
     private bool isActive = false;
+    public void SetIsActive(bool state)
+    {
+        isActive = state;
+    }
     private float ActiveTime = 0;
     private float ShootingCD = 0;
     private Vector3 originalPosition;
@@ -86,6 +93,7 @@ public class GunController : MonoBehaviour
     private bool isShoot = false;
     private bool isReload = false;
     private bool isAim = false;
+    private bool isFire = false;
     private AudioSource audioSource;
     private HashSet<GameObject> hitEnemies = new HashSet<GameObject>();
     public float GetDamage()
@@ -163,15 +171,15 @@ public class GunController : MonoBehaviour
     private void Start()
     {
         XRGrabInteractable grabInteractable = gameObject.GetComponent<XRGrabInteractable>();
-        grabInteractable.activated.AddListener(x =>  ShootDetect() );
-        //grabInteractable.deactivated.AddListener(x => StopCoroutine(Shoot()));
+        grabInteractable.activated.AddListener(x => isFire = true);
+        grabInteractable.deactivated.AddListener(x => isFire = false);
         cameraTransform = transform.parent;
-
+        anim = gameObject.GetComponent<Animator>();
         GetSound();
         if(MuzzleFlash != null)
         MuzzleFlash.Stop();
         OriginalPosition = transform.localPosition;
-
+        UpdateAmmoText();
     }
     private void GetSound()
     {
@@ -218,7 +226,7 @@ public class GunController : MonoBehaviour
         }
         if (isActive == true)
         {
-            //ShootDetect();
+            ShootDetect();
             if (isShoot == true)
             {
                 fireCoolDown();
@@ -262,7 +270,7 @@ public class GunController : MonoBehaviour
     }
     public void ShootDetect()
     {
-        Debug.Log("Fire");
+        if (!isFire) return;
         if (ReloadCD <= 0 && ShootingCD <= 0 && RemainAmmo > 0 && !isShoot && !isReload)
         {
 
@@ -314,12 +322,13 @@ public class GunController : MonoBehaviour
                 {
                     RemainAmmo = AmmoCount;
                 }
+                if(!hasInfiniteAmmo)
                 TotalAmmo -= (AmmoCount - StoreRemain);
                 if (TotalAmmo < 0)
                 {
                     TotalAmmo = 0;
                 }
-                UpdateInv();
+                UpdateAmmoText();
                 ReloadCD = 0;
                 hasSound = false;
                 if (audioSource != null)
@@ -368,9 +377,9 @@ public class GunController : MonoBehaviour
     }
     IEnumerator StartReload()
     {
-        
+        AmmoDisplayText.text = "CoolDown...";
         Animator gunAnimator = Gun.GetComponent<Animator>();
-        if (gunAnimator != null)
+        if (gunAnimator != null && gunAnimator.GetAnimatorTransitionInfo(0).IsName("Reload"))
         {
 
             float speedMultiplier = 1.0f / ReloadingTime;
@@ -379,7 +388,7 @@ public class GunController : MonoBehaviour
             gunAnimator.Play("Reload");
         }
         yield return new WaitForSeconds(ReloadingTime);
-        
+        UpdateAmmoText();
 
 
     }
@@ -407,7 +416,9 @@ public class GunController : MonoBehaviour
     {
         ShootFunction.Invoke();
         isShoot = true;
+        
         RemainAmmo--;
+        UpdateAmmoText();
         if (muzzleFlashLight != null)
         {
             muzzleFlashLight.SetActive(true);
@@ -431,7 +442,7 @@ public class GunController : MonoBehaviour
             
         }
         recoilMove();
-        UpdateInv();
+        UpdateAmmoText();
         GameObject FirePoint = m_fireGunPoint;
         if(FirePoint == null)
         {
@@ -464,7 +475,7 @@ public class GunController : MonoBehaviour
                 HitFunction.Invoke(hit.collider.gameObject);
 
                 
-                if (hit.collider.CompareTag("Wall"))
+                if (hit.collider.CompareTag("Wall") || hit.collider.GetComponent<Destructable>() != null)
                 {
                     Destructable destructable = hit.collider.GetComponent<Destructable>();
                     if (destructable != null)
@@ -510,9 +521,12 @@ public class GunController : MonoBehaviour
 
             }
         }
-        
-        //if(anim)
-        //StartCoroutine(StartRecoil());
+
+        if (anim)
+        {
+            //StartCoroutine(StartRecoil());
+            anim.Play("GunRecoil");
+        }
         yield return new WaitForSeconds(ShootingTime*0.1f);
         if (MuzzleFlash != null)
         {
@@ -596,12 +610,9 @@ public class GunController : MonoBehaviour
             }
         }
     }
-    public void UpdateInv()
+    public void UpdateAmmoText()
     {
-        if (Inventory != null)
-        {
-            //Inventory.UpdateSlotTexts(RemainAmmo, TotalAmmo);
-        }
+        AmmoDisplayText.text = "Ammo: " + RemainAmmo + "/" + TotalAmmo;
     }
 
 }

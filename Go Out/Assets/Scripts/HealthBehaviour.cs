@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using Unity.Netcode;
 
-public class HealthBehaviour : MonoBehaviour, IDamageable
+public class HealthBehaviour : NetworkBehaviour, IDamageable
 {
+    private NetworkObjectManager networkObjectSpawner;
     [SerializeField] private float health = 100f;
     private float initialHealth;
     private float damage = 0;
@@ -36,6 +38,7 @@ public class HealthBehaviour : MonoBehaviour, IDamageable
         SpawnerObject = GameObject.Find("Monster Spawner");
         initialHealth = health;
         audioSource = GetComponent<AudioSource>();
+        networkObjectSpawner = NetworkObjectManager.Singleton;
     }
 
     public void SetDamage(float damageAmount)
@@ -85,18 +88,14 @@ public class HealthBehaviour : MonoBehaviour, IDamageable
             health -= damage;
             if (health <= 0)
             {
-                  
-              if (gameObject.CompareTag("Enemy"))
+                if(m_EntityAnimator != null)
+                m_EntityAnimator.Play(m_EntityTargetAnimation);
+                if (IsServer)
                 {
-                    m_EntityAnimator.Play(m_EntityTargetAnimation);
-                            Destroy(gameObject, DeathTime);
+                    networkObjectSpawner.DestroyObject(gameObject.GetComponent<NetworkObject>());
                 }
-                    else
-                    {
-                        Destroy(gameObject);
-                    }
-
-                
+                else
+                    Destroy(gameObject, DeathTime);
             }
         
 
