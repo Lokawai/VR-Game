@@ -85,7 +85,7 @@ public class GameManager : NetworkBehaviour
     public void AddStageLevel()
     {
         gManager.StageLevel.Value++;
-        if (gManager.StartStageEvent.Length != 0 && gManager.StartStageEvent.Length <= gManager.StageLevel.Value)
+        if (gManager.StartStageEvent.Length > -1)
             InvokeUnityEvent(gManager.StartStageEvent[gManager.StageLevel.Value]);
     }
     public static void InvokeUnityEvent(UnityEvent unityEvent)
