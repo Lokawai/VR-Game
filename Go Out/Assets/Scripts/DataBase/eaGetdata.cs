@@ -12,7 +12,7 @@ public class eaGetdata : MonoBehaviour
     void Start()
     {
         // A correct website page.
-        StartCoroutine(GetRequest("http://localhost:80/dev/php/eadata.php"));
+        StartCoroutine(GetRequest("http://localhost:10080/dev/php/eadata.php"));
 
     }
 
