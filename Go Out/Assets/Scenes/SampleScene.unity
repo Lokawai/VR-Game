@@ -442,7 +442,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 5.58}
+  m_AnchoredPosition: {x: 0, y: 6.347}
   m_SizeDelta: {x: 1300, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &107763610
@@ -3201,6 +3201,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11401954, guid: c4e389e44d96da64ea974ab237ce1a9a, type: 3}
+      propertyPath: m_MaxScale
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401954, guid: c4e389e44d96da64ea974ab237ce1a9a, type: 3}
+      propertyPath: m_MinScale
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 11457174, guid: c4e389e44d96da64ea974ab237ce1a9a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -4621,7 +4629,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba55f65e0bfcd9e4089fbef2d452af6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items: []
 --- !u!4 &1260524636
 Transform:
   m_ObjectHideFlags: 0
@@ -4648,10 +4655,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f14d89a8e133db439bf90b07d6913e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputUsername: 
-  inputPassword: 
-  inputEmail: 
-  CreateUserURL: http://localhost:80/dev/php/uInsertUser.php
 --- !u!114 &1260524638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4664,10 +4667,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17664b71c92ec22439411c18eea558e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputUsername: Kimura Takuya
-  inputPassword: 123465
-  messageText: {fileID: 1909357861}
-  loginURL: http://localhost:80/dev/php/uLogin.php
 --- !u!114 &1260524639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6608,8 +6607,8 @@ MonoBehaviour:
   m_ReadOnly: 0
   m_RichText: 1
   m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_OnFocusSelectAll: 1
-  m_ResetOnDeActivation: 1
+  m_OnFocusSelectAll: 0
+  m_ResetOnDeActivation: 0
   m_RestoreOriginalTextOnEscape: 1
   m_isRichTextEditingAllowed: 0
   m_LineLimit: 0
@@ -6664,6 +6663,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9a0041129589d4409adf69ddb682562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distance: -1
+  verticaloffset: -0.5
+  positionSource: {fileID: 1618243352}
 --- !u!1 &1644535970
 GameObject:
   m_ObjectHideFlags: 0
