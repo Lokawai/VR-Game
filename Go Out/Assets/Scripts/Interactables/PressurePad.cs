@@ -8,6 +8,10 @@ public class PressurePad : MonoBehaviour
     [Header("Note: Require the tag of Object as \"Target\" in order to activate")]
     [SerializeField] private UnityEvent m_enterAction;
     private bool isPressed = false;
+    public void SetPressedState(bool state)
+    {
+        isPressed = state;
+    }
     private void OnTriggerStay(Collider other)
     {
         if(other.tag == "Target")
