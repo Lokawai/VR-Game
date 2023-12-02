@@ -170,6 +170,10 @@ public class GunController : MonoBehaviour
 
     private void Start()
     {
+        if(AmmoDisplayText==null)
+        {
+            AmmoDisplayText = GameObjectFinder.GetGameObjectFromTag("ActionBar").GetComponent<TMP_Text>();
+        }
         XRGrabInteractable grabInteractable = gameObject.GetComponent<XRGrabInteractable>();
         grabInteractable.activated.AddListener(x => isFire = true);
         grabInteractable.deactivated.AddListener(x => isFire = false);

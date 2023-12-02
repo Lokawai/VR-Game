@@ -28,6 +28,7 @@ public class GameManager : NetworkBehaviour
     public List<GameObject> currentPlayers = new List<GameObject>();
     [SerializeField]
     private TMP_Text ipAddress = default;
+    [SerializeField] private TMP_Text actionBar;
     NetworkVariable<bool> gameStarted = new NetworkVariable<bool>();
     public void SetIpAddressText(string address)
     {
@@ -52,7 +53,14 @@ public class GameManager : NetworkBehaviour
     {
         playerId.Value++;
     }
-
+    public void SetEnableTextFalse()
+    {
+        actionBar.enabled = false;
+    }
+    public void SetEnableTextTrue()
+    {
+        actionBar.enabled = true;
+    }
     private NetworkVariable<int> playerId =  new NetworkVariable<int>();
     void Start()
     {

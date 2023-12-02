@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Enemy
   - Target
+  - ActionBar
   layers:
   - Default
   - TransparentFX
