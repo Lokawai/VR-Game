@@ -54,6 +54,7 @@ MonoBehaviour:
   maxExtendRange: 10
   stayTime: 0.5
   extendSpeed: 10
+  ignoreCollision: 0
   extenderObject: {fileID: 153011431871850850}
   targetObject: {fileID: 153011433227997713}
 --- !u!114 &153011431215399330
@@ -292,7 +293,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 572ff863a1111214eb8db5b05a0241fa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -388,7 +389,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 98e8774961db08443b285efa90d93459, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

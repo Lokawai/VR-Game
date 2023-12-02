@@ -25,6 +25,6 @@ public class PositionManager : MonoBehaviour
     public void SetScale(float Value)
     {
         gameObject.transform.localScale = new Vector3(Value, Value, Value);
-        Debug.Log("Set!");
+
     }
 }

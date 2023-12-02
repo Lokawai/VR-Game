@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class Destructable : NetworkBehaviour
 {
     private NetworkObjectManager networkObjectManager;
+    [SerializeField] private GameObject disableFX;
     [SerializeField] private GameObject destroyedVersion;
     [SerializeField] private float MaxDurability = 100f;
     [SerializeField] private bool isInvincible = false;
@@ -77,6 +78,16 @@ public class Destructable : NetworkBehaviour
             {
                 isDestroyed = false;
                 Durability = MaxDurability;
+                if(disableFX != null)
+                {
+                    if(IsServer)
+                    {
+                        networkObjectManager.SpawnObject(disableFX, transform.position, transform.rotation);
+                    } else
+                    {
+                        GameObject shattered = Instantiate(disableFX, transform.position, transform.rotation) as GameObject;
+                    }
+                }
                 gameObject.SetActive(false);
             }
             if(m_DestroyState == DestroyState.CustomAction)

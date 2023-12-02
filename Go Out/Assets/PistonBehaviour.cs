@@ -5,11 +5,14 @@ using UnityEngine;
 public class PistonBehaviour : MonoBehaviour
 {
     [SerializeField] private GameObject visualFX;
+    [SerializeField] private AudioClip activeSound;
     [SerializeField] private float hitForce = 10f;
     [SerializeField] private float maxExtendRange = 10f;
     [SerializeField] private float stayTime = 0f;
     [SerializeField] private float extendSpeed = 1f;
     [SerializeField] private bool ignoreCollision = false;
+    [SerializeField] private LayerMask collisionLayer;
+
     public PistonState currentState { get; private set; }
     [SerializeField]
     private Transform extenderObject;
@@ -20,14 +23,19 @@ public class PistonBehaviour : MonoBehaviour
     private float initialTargetY;
     private Vector3 initialExtenderPosition;
     private float currentExtension = 0f;
+    AudioSource audioSource;
     private void Start()
     {
         initialScaleY = extenderObject.localScale.y;
         initialTargetY = targetObject.localPosition.y;
         initialExtenderPosition = extenderObject.localPosition;
         currentExtension = 0f;
+        audioSource = GetComponent<AudioSource>();
     }
+    private void Awake()
+    {
 
+    }
     private void Update()
     {
         float currentScaleY = extenderObject.localScale.y;
@@ -56,24 +64,29 @@ public class PistonBehaviour : MonoBehaviour
     private void RaycastDetection()
     {
         RaycastHit hit;
-        if (Physics.Raycast(targetObject.position, targetObject.up, out hit, 0.5f))
+        if (Physics.Raycast(targetObject.position, targetObject.up, out hit, 0.1f))
         {
-            Destructable destructable = hit.transform.GetComponent<Destructable>();
-            // A collision occurred within the raycast range
-            if (destructable != null)
+            if ((collisionLayer.value & (1 << hit.transform.gameObject.layer)) > 0)
             {
-                destructable.DestroyObject(hit, hitForce, visualFX, true);
-            }
-            else
-            {
-                if (visualFX)
+
+
+                Destructable destructable = hit.transform.GetComponent<Destructable>();
+                // A collision occurred within the raycast range
+                if (destructable != null)
                 {
-                    GameObject fx = Instantiate(visualFX, hit.point, Quaternion.identity);
-                    fx.transform.rotation = Quaternion.LookRotation(hit.normal);
+                    destructable.DestroyObject(hit, hitForce, visualFX, true);
                 }
+                else
+                {
+                    if (visualFX)
+                    {
+                        GameObject fx = Instantiate(visualFX, hit.point, Quaternion.identity);
+                        fx.transform.rotation = Quaternion.LookRotation(hit.normal);
+                    }
+                }
+                if (currentState == PistonState.extend)
+                    StartCoroutine(PistonStay());
             }
-            if (currentState == PistonState.extend)
-                StartCoroutine(PistonStay());
         }
     }
     public void SetPistonState(PistonState pistonState)
@@ -97,6 +110,11 @@ public class PistonBehaviour : MonoBehaviour
                 break;
             case 1:
                 currentState = PistonState.extend;
+                if (activeSound != null && audioSource != null)
+                {
+                    audioSource.clip = activeSound;
+                    audioSource.PlayOneShot(activeSound);
+                }
                 break;
             case 2:
                 currentState = PistonState.shrunk;

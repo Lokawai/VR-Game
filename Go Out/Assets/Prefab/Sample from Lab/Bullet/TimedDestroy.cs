@@ -22,7 +22,7 @@ public class TimedDestroy : MonoBehaviour {
 		if (audioSource != null)
 		{
 			
-			int n = Random.Range(1, HitSounds.Length);
+			int n = (int)Random.Range(0, HitSounds.Length-1);
 			audioSource.clip = HitSounds[n];
 			audioSource.PlayOneShot(audioSource.clip, 0.1f);
 		}
