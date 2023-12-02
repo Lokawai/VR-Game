@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3891807718660427659}
   - component: {fileID: 3891807718675688821}
   - component: {fileID: 3891807718676515739}
+  - component: {fileID: -3035375328657060378}
   m_Layer: 0
   m_Name: SmokePuff
   m_TagString: Untagged
@@ -4767,3 +4768,18 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &-3035375328657060378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3891807718660639789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45e8bdd6b407cf41aa99d8a2b085e7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _destroyDelay: 3
+  audioSource: {fileID: 0}
+  HitSounds: []

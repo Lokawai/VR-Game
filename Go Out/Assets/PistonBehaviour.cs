@@ -7,7 +7,9 @@ public class PistonBehaviour : MonoBehaviour
     [SerializeField] private GameObject visualFX;
     [SerializeField] private float hitForce = 10f;
     [SerializeField] private float maxExtendRange = 10f;
+    [SerializeField] private float stayTime = 0f;
     [SerializeField] private float extendSpeed = 1f;
+    [SerializeField] private bool ignoreCollision = false;
     public PistonState currentState { get; private set; }
     [SerializeField]
     private Transform extenderObject;
@@ -41,10 +43,18 @@ public class PistonBehaviour : MonoBehaviour
         if(currentState == PistonState.extend)
         {
             Extend();
+            if (!ignoreCollision)
+            {
+                RaycastDetection();
+            }
         } else if(currentState == PistonState.shrunk)
         {
             Shrunk();
         }
+
+    }
+    private void RaycastDetection()
+    {
         RaycastHit hit;
         if (Physics.Raycast(targetObject.position, targetObject.up, out hit, 0.5f))
         {
@@ -53,7 +63,8 @@ public class PistonBehaviour : MonoBehaviour
             if (destructable != null)
             {
                 destructable.DestroyObject(hit, hitForce, visualFX, true);
-            } else
+            }
+            else
             {
                 if (visualFX)
                 {
@@ -61,14 +72,21 @@ public class PistonBehaviour : MonoBehaviour
                     fx.transform.rotation = Quaternion.LookRotation(hit.normal);
                 }
             }
-            if(currentState == PistonState.extend)
-            SetPistonState(PistonState.shrunk);
+            if (currentState == PistonState.extend)
+                StartCoroutine(PistonStay());
         }
     }
-
     public void SetPistonState(PistonState pistonState)
     {
+
         currentState = pistonState;   
+
+    }
+    public IEnumerator PistonStay()
+    {
+        currentState = PistonState.stay;
+        yield return new WaitForSeconds(stayTime);
+        currentState = PistonState.shrunk;
     }
     public void SetIntPistonState(int value)
     {
@@ -82,6 +100,9 @@ public class PistonBehaviour : MonoBehaviour
                 break;
             case 2:
                 currentState = PistonState.shrunk;
+                break;
+            case 3:
+                currentState = PistonState.stay;
                 break;
         }
     }
@@ -104,7 +125,8 @@ public class PistonBehaviour : MonoBehaviour
         }
         else if(currentExtension >= maxExtendRange)
         {
-            currentState = PistonState.shrunk;
+            StartCoroutine(PistonStay());
+            
         }
     }
     private void Shrunk()
@@ -134,5 +156,6 @@ public enum PistonState
 {
     none,
     extend,
-    shrunk
+    shrunk,
+    stay
 }
