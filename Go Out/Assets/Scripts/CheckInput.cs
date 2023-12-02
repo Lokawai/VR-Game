@@ -1,29 +1,45 @@
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
+using TMPro;
 
 public class CheckInput : MonoBehaviour
 {
     [SerializeField]
-    private TMP_InputField inputField;
+    private List<InputToCheck> inputs;
 
     [SerializeField]
-    private string expectedValue;
+    private UnityEvent onFailed;
 
-    public void CheckIput()
+    [SerializeField]
+    private UnityEvent onPassed;
+
+    private void Awake()
     {
-        string enteredValue = inputField.text;
-
-        if (enteredValue == expectedValue)
-        {
-            Debug.Log("Input is correct!");
-        }
-        else
-        {
-            Debug.Log("Input is incorrect. Please try again.");
-        }
+        foreach (InputToCheck input in inputs)
+            input.inputField.onEndEdit.AddListener(text => PassCheck());
     }
 
+    public void PassCheck()
+    {
+        foreach (InputToCheck input in inputs)
+        {
+            // Fail if any of the input is incorrect
+            if (input.inputField.text != input.expectedValue)
+            {
+                onFailed.Invoke();
+                return;
+            }
+        }
+
+        // All input check passed
+        onPassed.Invoke();
+    }
+
+    [System.Serializable]
+    public struct InputToCheck
+    {
+        public TMP_InputField inputField;
+        public string expectedValue;
+    }
 }
