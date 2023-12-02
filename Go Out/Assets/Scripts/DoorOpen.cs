@@ -14,6 +14,10 @@ public class DoorOpen : MonoBehaviour
 
     private float speed = 5.0f;
 
+  
+
+
+
     private void Update()
     {
         if (ispress)
@@ -30,4 +34,7 @@ public class DoorOpen : MonoBehaviour
     {
         ispress = !ispress;
     }
+
+
+
 }
