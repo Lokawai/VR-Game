@@ -5189,6 +5189,7 @@ MonoBehaviour:
   visualFX: {fileID: 3891807718660639789, guid: 2253a5659e41fed46a2309afb73289dc,
     type: 3}
   activeSound: {fileID: 8300000, guid: 771c5544a178f5a4aa030aa68dbe123d, type: 3}
+  hitSound: {fileID: 8300000, guid: 1fcbdc540851a5d448000ca912547460, type: 3}
   hitForce: 10
   maxExtendRange: 100
   stayTime: 0
@@ -5197,6 +5198,7 @@ MonoBehaviour:
   collisionLayer:
     serializedVersion: 2
     m_Bits: 2147483647
+  activePiston: 0
   extenderObject: {fileID: 4936896685786744677}
   targetObject: {fileID: 4830629690710319262}
 --- !u!82 &4936896686104118221
@@ -6440,6 +6442,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5551a627b5682c40ae8d87a11bace9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCloned:
+    m_InternalValue: 0
 --- !u!114 &4936896686980960111
 MonoBehaviour:
   m_ObjectHideFlags: 0

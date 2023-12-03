@@ -36,6 +36,10 @@ public class GameManager : NetworkBehaviour
     [SerializeField] private TMP_Text actionBar;
     NetworkVariable<bool> gameStarted = new NetworkVariable<bool>();
     private NetworkVariable<bool> isEnded = new NetworkVariable<bool>();
+    [SerializeField]
+    private UnityEvent m_EnterLobbyEvent;
+    [SerializeField]
+    private UnityEvent m_EnterGameEvent;
     public void SetIpAddressText(string address)
     {
         ipAddress.text = "IP: " + address;
@@ -83,6 +87,7 @@ public class GameManager : NetworkBehaviour
         initialRightRaycastDis = dynamicMove.rightControllerTransform.GetComponent<XRRayInteractor>().maxRaycastDistance;
 
         gameState.Value = GameState.Default;
+        m_EnterLobbyEvent.Invoke();
     }
     private void Awake()
     {
@@ -103,6 +108,7 @@ public class GameManager : NetworkBehaviour
         gameStarted.Value = true;
         Animator animator = m_UIObject.GetComponent<Animator>();
         animator.Play("FadeIn");
+        m_EnterGameEvent.Invoke();
 
     }
     public IEnumerator DelayTeleport(Vector3 pos)
@@ -155,7 +161,7 @@ public class GameManager : NetworkBehaviour
             pressure.SetPressedState(false);
         }
         gameState.Value = GameState.Default;
-
+        m_EnterLobbyEvent.Invoke();
         NetworkManager.Singleton.Shutdown();
     }
     public void LoseGame()

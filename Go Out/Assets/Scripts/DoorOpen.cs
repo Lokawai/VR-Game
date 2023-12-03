@@ -11,7 +11,8 @@ public class DoorOpen : MonoBehaviour
     private bool ispress = false;
     [SerializeField]
     private Vector3 targetPosition;
-
+    [SerializeField]
+    private AudioClip openSound;
     private float speed = 5.0f;
 
 
@@ -36,6 +37,9 @@ public class DoorOpen : MonoBehaviour
     public void press()
     {
         ispress = !ispress;
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.clip = openSound;
+        audioSource.PlayOneShot(openSound);
     }
 
 
