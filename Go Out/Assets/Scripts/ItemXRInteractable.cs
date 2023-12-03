@@ -24,7 +24,10 @@ public class ItemXRInteractable : XRGrabInteractable
             Drop();
         }
     }
-
+    public void ForceDrop(XRBaseInteractor interactor)
+    {
+        OnSelectExited(interactor);
+    }
     protected override void OnSelectExited(SelectExitEventArgs args)
     {
         base.OnSelectExited(args);

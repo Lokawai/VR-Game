@@ -20,6 +20,10 @@ public class MusicManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
     }
+    public void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     public void ModifyVolume(float value)
     {
         audioSource.volume = value;
@@ -38,6 +42,7 @@ public class MusicManager : MonoBehaviour
     }
     public void PlayLobbyMusic()
     {
+        if (audioSource == null || audioSource.clip == null) return;
         if (audioSource.clip == bgMusic)
         {
            StartCoroutine(ResetAndPlay(lobbyMusic));

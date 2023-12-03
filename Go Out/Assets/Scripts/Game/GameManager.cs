@@ -126,6 +126,7 @@ public class GameManager : NetworkBehaviour
             InvokeUnityEvent(gManager.StartStageEvent[gManager.StageLevel.Value]);
 
     }
+
     public IEnumerator EndGame()
     {
         Animator animator = m_UIObject.GetComponent<Animator>();
@@ -147,6 +148,12 @@ public class GameManager : NetworkBehaviour
         PositionManager[] targetGameObjects = GameObject.FindObjectsOfType<PositionManager>();
         foreach(PositionManager positionManager in targetGameObjects)
         {
+            XRGrabInteractable xRGrabInteractable = positionManager.GetComponent<XRGrabInteractable>();
+            if(xRGrabInteractable != null)
+            {
+                xRGrabInteractable.gameObject.SetActive(false);
+                xRGrabInteractable.gameObject.SetActive(true);
+            }
             DoorOpen doorOpen = positionManager.GetComponent<DoorOpen>();
             if (doorOpen != null)
             {
