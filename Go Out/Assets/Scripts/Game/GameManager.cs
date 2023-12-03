@@ -12,6 +12,7 @@ public class GameManager : NetworkBehaviour
 {
     public GManager gManager;
     public static GameManager Singleton;
+    [SerializeField] private NetworkVariable<GameState> gameState = new NetworkVariable<GameState>(); 
     [SerializeField]
     private GameObject m_XROrigin = default;
     private float originMoveSpeed = default;
@@ -34,6 +35,7 @@ public class GameManager : NetworkBehaviour
     private TMP_Text ipAddress = default;
     [SerializeField] private TMP_Text actionBar;
     NetworkVariable<bool> gameStarted = new NetworkVariable<bool>();
+    private NetworkVariable<bool> isEnded = new NetworkVariable<bool>();
     public void SetIpAddressText(string address)
     {
         ipAddress.text = "IP: " + address;
@@ -66,15 +68,21 @@ public class GameManager : NetworkBehaviour
         actionBar.enabled = true;
     }
     private NetworkVariable<int> playerId =  new NetworkVariable<int>();
+    private float initialLeftRaycastDis = 0f;
+    private float initialRightRaycastDis = 0f;
     void Start()
     {
+        isEnded.Value = false;
         gameStarted.Value = false;
         dynamicMove = m_XROrigin.GetComponent<DynamicMoveProvider>();
         originMoveSpeed = dynamicMove.moveSpeed;
         dynamicMove.moveSpeed = 0f;
         dynamicMove.leftControllerTransform.GetComponent<XRRayInteractor>().maxRaycastDistance = 30f;
         dynamicMove.rightControllerTransform.GetComponent<XRRayInteractor>().maxRaycastDistance = 30f;
+        initialLeftRaycastDis = dynamicMove.leftControllerTransform.GetComponent<XRRayInteractor>().maxRaycastDistance;
+        initialRightRaycastDis = dynamicMove.rightControllerTransform.GetComponent<XRRayInteractor>().maxRaycastDistance;
 
+        gameState.Value = GameState.Default;
     }
     private void Awake()
     {
@@ -95,12 +103,14 @@ public class GameManager : NetworkBehaviour
         gameStarted.Value = true;
         Animator animator = m_UIObject.GetComponent<Animator>();
         animator.Play("FadeIn");
+
     }
     public IEnumerator DelayTeleport(Vector3 pos)
     {
 
         yield return new WaitForSeconds(delayTeleportTime);
         player.transform.position = pos;
+
     }
 
     public void AddStageLevel()
@@ -110,21 +120,63 @@ public class GameManager : NetworkBehaviour
             InvokeUnityEvent(gManager.StartStageEvent[gManager.StageLevel.Value]);
 
     }
-    public void EndGame()
+    public IEnumerator EndGame()
     {
         Animator animator = m_UIObject.GetComponent<Animator>();
+        animator.Play("GameEnd");
+        TimeManager timeUnit = GetComponent<TimeManager>();
+        timeUnit.Reset();
+        yield return new WaitForSeconds(0.5f);
+
+        timeUnit.ActiveReturnTimer();
+        gameStarted.Value = false;
+        yield return new WaitForSeconds(timeUnit.ReturnTime);
+        dynamicMove.moveSpeed = 0f;
+        dynamicMove.leftControllerTransform.GetComponent<XRRayInteractor>().maxRaycastDistance = initialLeftRaycastDis;
+        dynamicMove.rightControllerTransform.GetComponent<XRRayInteractor>().maxRaycastDistance = initialRightRaycastDis;
+
         animator.Play("FadeIn");
         StartCoroutine(DelayTeleport(player.GetComponent<PositionManager>().GetInitialPosition()));
         gManager.StageLevel.Value = 0;
         PositionManager[] targetGameObjects = GameObject.FindObjectsOfType<PositionManager>();
         foreach(PositionManager positionManager in targetGameObjects)
         {
+            DoorOpen doorOpen = positionManager.GetComponent<DoorOpen>();
+            if (doorOpen != null)
+            {
+                doorOpen.Reset();
+            }
+            if(!positionManager.CompareTag("Player"))
             positionManager.ResetTransform();
         }
         PressurePad[] targetPGameObjects = GameObject.FindObjectsOfType<PressurePad>();
         foreach (PressurePad pressure in targetPGameObjects)
         {
             pressure.SetPressedState(false);
+        }
+        gameState.Value = GameState.Default;
+
+        NetworkManager.Singleton.Shutdown();
+    }
+    public void LoseGame()
+    {
+        TimeManager timeManager = GetComponent<TimeManager>();
+        timeManager.m_ReturnDisplayHeader = "You ran out of time!";
+        if (gameState.Value == GameState.Default)
+        {
+            gameState.Value = GameState.Lose;
+            isEnded.Value = true;
+        }
+
+    }
+    public void WinGame()
+    {
+        TimeManager timeManager = GetComponent<TimeManager>();
+        timeManager.m_ReturnDisplayHeader = "You escaped and won the game!";
+        if (gameState.Value == GameState.Default)
+        {
+            gameState.Value = GameState.Win;
+            isEnded.Value = true;
         }
     }
     public static void InvokeUnityEvent(UnityEvent unityEvent)
@@ -154,14 +206,28 @@ public class GameManager : NetworkBehaviour
         {
             InvokeUnityEvent(gManager.LoopingStageEvent[gManager.StageLevel.Value]);
         }
+        if(isEnded.Value)
+        {
+            switch(gameState.Value)
+            {
+                case GameState.Lose:
+                    StartCoroutine(EndGame());
+                    break;
+                case GameState.Win:
+                    StartCoroutine(EndGame());
+                    break;
+
+            }
+            isEnded.Value = false;
+        }
     }
 
     public void NetworkDetection()
     {
         if(networkData != null && networkData.startNetwork == true)
         {
-            StartGame();
             ConnectServer();
+            StartGame();
             networkData.startNetwork = false;
         }
     }
@@ -192,3 +258,9 @@ public struct GManager
     public UnityEvent[] LoopingStageEvent { get {return m_LoopingStageEvent; } }
 }
 
+public enum GameState
+{
+    Default,
+    Win,
+    Lose
+}

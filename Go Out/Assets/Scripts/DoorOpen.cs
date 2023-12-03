@@ -14,8 +14,11 @@ public class DoorOpen : MonoBehaviour
 
     private float speed = 5.0f;
 
-  
 
+    public void Reset()
+    {
+        ispress = false;
+    }
 
 
     private void Update()

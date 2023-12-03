@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class PositionManager : MonoBehaviour
@@ -7,6 +8,11 @@ public class PositionManager : MonoBehaviour
     Vector3 initialPos;
     Quaternion initialRotation;
     Vector3 initialScale;
+    public NetworkVariable<bool> isCloned = new NetworkVariable<bool>();
+    public void Awake()
+    {
+        isCloned.Value = false;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +26,10 @@ public class PositionManager : MonoBehaviour
         transform.position = initialPos;
         transform.rotation = initialRotation;
         transform.localScale = initialScale;
-        gameObject.SetActive(true);
+        if (!isCloned.Value)
+            gameObject.SetActive(true);
+        else
+            NetworkObjectManager.DestroyObject(gameObject);
     }
     public void SetScale(float Value)
     {

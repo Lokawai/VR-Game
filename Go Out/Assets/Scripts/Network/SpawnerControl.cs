@@ -32,12 +32,15 @@ public class SpawnerControl : NetworkSingleton<SpawnerControl>
             {
                 go.GetComponent<XRGrabInteractable>().selectEntered.AddListener(SetStateTrue);
                 go.GetComponent<XRGrabInteractable>().selectExited.AddListener(SetStateFalse);
+                PositionManager positionManager = go.GetComponent<PositionManager>();
+                positionManager.isCloned.Value = true;
             }
             go.GetComponent<Rigidbody>().isKinematic = false;  //if checked, need to turn off
            
 
         }
     }
+
     private void SetStateFalse(SelectExitEventArgs args)
     {
         gameManager.SetEnableTextFalse();
