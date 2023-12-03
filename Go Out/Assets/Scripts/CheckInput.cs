@@ -29,6 +29,9 @@ public class CheckInput : MonoBehaviour
             {
                 onFailed.Invoke();
                 return;
+            } else
+            {
+                input.SuccessAction.Invoke();
             }
         }
 
@@ -41,5 +44,6 @@ public class CheckInput : MonoBehaviour
     {
         public TMP_InputField inputField;
         public string expectedValue;
+        public UnityEvent SuccessAction;
     }
 }

@@ -12,7 +12,8 @@ public class PistonBehaviour : MonoBehaviour
     [SerializeField] private float extendSpeed = 1f;
     [SerializeField] private bool ignoreCollision = false;
     [SerializeField] private LayerMask collisionLayer;
-
+    [Header("Debug Purpose")]
+    [SerializeField] private bool activePiston = false;
     public PistonState currentState { get; private set; }
     [SerializeField]
     private Transform extenderObject;
@@ -38,6 +39,11 @@ public class PistonBehaviour : MonoBehaviour
     }
     private void Update()
     {
+        if(activePiston)
+        {
+            currentState = PistonState.extend;
+            activePiston = false;
+        }
         float currentScaleY = extenderObject.localScale.y;
         float scaleDelta = currentScaleY - initialScaleY;
 
