@@ -30,19 +30,19 @@ public class SpawnerControl : NetworkSingleton<SpawnerControl>
             GameObject go = networkObjectManager.SpawnObject(objectPrefab, spawnPlaceHolder.position, Quaternion.identity);
             if (go.GetComponent<GunController>() != null)
             {
-                go.GetComponent<XRGrabInteractable>().selectEntered.AddListener(SetStateFalse);
-                go.GetComponent<XRGrabInteractable>().selectExited.AddListener(SetStateTrue);
+                go.GetComponent<XRGrabInteractable>().selectEntered.AddListener(SetStateTrue);
+                go.GetComponent<XRGrabInteractable>().selectExited.AddListener(SetStateFalse);
             }
             go.GetComponent<Rigidbody>().isKinematic = false;  //if checked, need to turn off
            
 
         }
     }
-    private void SetStateFalse(SelectEnterEventArgs args)
+    private void SetStateFalse(SelectExitEventArgs args)
     {
         gameManager.SetEnableTextFalse();
     }
-    private void SetStateTrue(SelectExitEventArgs args)
+    private void SetStateTrue(SelectEnterEventArgs args)
     {
         gameManager.SetEnableTextTrue();
     }

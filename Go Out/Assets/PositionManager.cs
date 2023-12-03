@@ -27,4 +27,8 @@ public class PositionManager : MonoBehaviour
         gameObject.transform.localScale = new Vector3(Value, Value, Value);
 
     }
+    public Vector3 GetInitialPosition()
+    {
+        return initialPos;
+    }
 }

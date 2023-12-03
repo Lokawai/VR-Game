@@ -18,9 +18,13 @@ public class GameManager : NetworkBehaviour
     [SerializeField]
     private NetworkManager m_networkManager = default;
     [SerializeField]
+    private GameObject m_UIObject;
+    [SerializeField]
     private NetworkSO networkData = default;
     [SerializeField]
     private Vector3 startPosition = default;
+    [SerializeField]
+    private float delayTeleportTime = 1f;
     [SerializeField]
     private GameObject player = default;
     DynamicMoveProvider dynamicMove = default;
@@ -82,12 +86,21 @@ public class GameManager : NetworkBehaviour
     {
         
         dynamicMove.moveSpeed = originMoveSpeed;
-        player.transform.position = startPosition;
+        StartCoroutine(DelayTeleport(startPosition));
+        //player.transform.position = startPosition;
         m_XROrigin.GetComponent<InventoryBehaviour>().InventoryCanvas.SetActive(true);
         dynamicMove.leftControllerTransform.GetComponent<XRRayInteractor>().maxRaycastDistance = 2f;
         dynamicMove.rightControllerTransform.GetComponent<XRRayInteractor>().maxRaycastDistance = 2f;
         AddStageLevel();
         gameStarted.Value = true;
+        Animator animator = m_UIObject.GetComponent<Animator>();
+        animator.Play("FadeIn");
+    }
+    public IEnumerator DelayTeleport(Vector3 pos)
+    {
+
+        yield return new WaitForSeconds(delayTeleportTime);
+        player.transform.position = pos;
     }
 
     public void AddStageLevel()
@@ -95,6 +108,24 @@ public class GameManager : NetworkBehaviour
         gManager.StageLevel.Value++;
         if (gManager.StartStageEvent.Length > -1)
             InvokeUnityEvent(gManager.StartStageEvent[gManager.StageLevel.Value]);
+
+    }
+    public void EndGame()
+    {
+        Animator animator = m_UIObject.GetComponent<Animator>();
+        animator.Play("FadeIn");
+        StartCoroutine(DelayTeleport(player.GetComponent<PositionManager>().GetInitialPosition()));
+        gManager.StageLevel.Value = 0;
+        PositionManager[] targetGameObjects = GameObject.FindObjectsOfType<PositionManager>();
+        foreach(PositionManager positionManager in targetGameObjects)
+        {
+            positionManager.ResetTransform();
+        }
+        PressurePad[] targetPGameObjects = GameObject.FindObjectsOfType<PressurePad>();
+        foreach (PressurePad pressure in targetPGameObjects)
+        {
+            pressure.SetPressedState(false);
+        }
     }
     public static void InvokeUnityEvent(UnityEvent unityEvent)
     {
