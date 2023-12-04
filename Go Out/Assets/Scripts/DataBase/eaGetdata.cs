@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class eaGetdata : MonoBehaviour
 {
 
     public string[] items;
+    public GameObject textPrefab; // Prefab of the text object for displaying player data
+    public Transform textContainer; // Parent transform for the spawned text objects
 
+    private List<PlayerData> rankingData; // List to store ranking data
     void Start()
     {
         // A correct website page.
-        StartCoroutine(GetRequest("http://localhost:10080/dev/php/eadata.php"));
+        StartCoroutine(GetRequest("http://localhost:80/dev/php/eadata.php"));
+        // Initialize and populate the rankingData list with sample data
+        rankingData = new List<PlayerData>() { };
+
+        // Display the ranking list
 
     }
 
@@ -51,7 +59,53 @@ public class eaGetdata : MonoBehaviour
                     break;
             }
         }
+        DisplayRankingList();
     }//GetRequest
+
+    private void AddPlayer()
+    {
+        foreach(string i in items)
+        {
+            AddPlayerData(GetDataValue(i, "Name:"), GetDataValue(i, "time:"));
+        }
+        DisplayRankingList();
+    }
+    private void DisplayRankingList()
+    {
+
+        // Clear any existing text objects in the textContainer
+        foreach (Transform child in textContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Iterate through the rankingData list and spawn a text object for each player's information
+        for (int i = 0; i < rankingData.Count; i++)
+        {
+            // Instantiate a new text object from the prefab
+            GameObject newText = Instantiate(textPrefab, textContainer);
+            Text text = newText.GetComponent<Text>();
+            // Set the text value of the spawned object to display the player's information
+            newText.GetComponent<Text>().text = $"{i + 1}. {rankingData[i].name}: {rankingData[i].time} s";
+            newText.GetComponent<Text>().enabled = true;
+            newText.GetComponent<VerticalLayoutGroup>().enabled = true;
+        }
+    }
+
+    public void AddPlayerData(string name, string time)
+    {
+        // Create a new PlayerData object with the provided name and time
+        PlayerData newPlayer = new PlayerData(name, time);
+
+        // Add the new player to the rankingData list
+        rankingData.Add(newPlayer);
+
+        // Sort the rankingData based on times (in descending order)
+        rankingData.Sort((a, b) => b.time.CompareTo(a.time));
+
+        // Display the updated ranking list
+        DisplayRankingList();
+    }
 
     string GetDataValue(string data, string index)
     {
@@ -62,4 +116,15 @@ public class eaGetdata : MonoBehaviour
     }
 }
 
+public class PlayerData
+{
+    public string name;
+    public string time;
+
+    public PlayerData(string name, string time)
+    {
+        this.name = name;
+        this.time = time;
+    }
+}
 
