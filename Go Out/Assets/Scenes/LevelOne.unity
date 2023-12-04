@@ -17829,12 +17829,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '
-
-'
+  m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -17858,11 +17856,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 180
+  m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 0.1
+  m_fontSizeMin: 0.05
   m_fontSizeMax: 180
   m_fontStyle: 0
   m_HorizontalAlignment: 2
@@ -17916,7 +17914,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 604446426}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -2.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1133479667}
@@ -17924,8 +17922,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 2.8220005, y: -25.18}
-  m_SizeDelta: {x: 11, y: 0.78}
+  m_AnchoredPosition: {x: 2.6620007, y: -26.35}
+  m_SizeDelta: {x: 11, y: 0.332}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &605233788
 GameObject:
@@ -37903,7 +37901,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1463704286}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AttachTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41938,7 +41936,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1662459677}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -2.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1133479667}
@@ -41946,8 +41944,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 2.822, y: 9.16}
-  m_SizeDelta: {x: 2.895, y: 0.345}
+  m_AnchoredPosition: {x: 2.6620007, y: 10.728002}
+  m_SizeDelta: {x: 1.18, y: 0.13}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1662459679
 MonoBehaviour:
@@ -41971,8 +41969,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Ammo: 10/10'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 9ad269c99dcf42b7aedefd83dd5a7b9d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 559b3570419518e4ead303fe5b0c7ed3, type: 2}
+  m_sharedMaterial: {fileID: -5204454944402147720, guid: 559b3570419518e4ead303fe5b0c7ed3,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -41996,7 +41995,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.3
+  m_fontSize: 0.1
   m_fontSizeBase: 64.13
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -42056,7 +42055,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1668245104}
   - component: {fileID: 1668245103}
-  - component: {fileID: 1668245102}
   - component: {fileID: 1668245100}
   - component: {fileID: 1668245099}
   m_Layer: 0
@@ -42108,19 +42106,6 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!135 &1668245102
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1668245096}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1668245103
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -43154,7 +43139,7 @@ GameObject:
   - component: {fileID: 1790759883}
   - component: {fileID: 1790759882}
   - component: {fileID: 1790759881}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51333,7 +51318,7 @@ GameObject:
   - component: {fileID: 1993733891}
   - component: {fileID: 1993733892}
   - component: {fileID: 2141820768}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Piston
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55741,7 +55726,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1157516978464486292}
   - component: {fileID: 7643865016484294276}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MuzzleFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59234,7 +59219,7 @@ GameObject:
   - component: {fileID: 543450652909368371}
   - component: {fileID: 505721782}
   - component: {fileID: 919132148905913994}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: boxeglove_model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60031,7 +60016,7 @@ GameObject:
   - component: {fileID: 602807226}
   - component: {fileID: 602807228}
   - component: {fileID: 602807234}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60129,7 +60114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3014416787232066514}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60147,7 +60132,7 @@ GameObject:
   - component: {fileID: 3014416787314790437}
   - component: {fileID: 3014416787315560453}
   - component: {fileID: 3014416787316560581}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SM_Wep_Pistol_Heavy_Trigger_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60165,7 +60150,7 @@ GameObject:
   - component: {fileID: 3014416787314790441}
   - component: {fileID: 3014416787315560457}
   - component: {fileID: 3014416787316560585}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SM_Wep_Pistol_Heavy_Mag_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60183,7 +60168,7 @@ GameObject:
   - component: {fileID: 3014416787314790443}
   - component: {fileID: 3014416787315560459}
   - component: {fileID: 3014416787316560587}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SM_Wep_Pistol_Heavy_Slide_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60201,7 +60186,7 @@ GameObject:
   - component: {fileID: 3014416787314790445}
   - component: {fileID: 3014416787315560461}
   - component: {fileID: 3014416787316560589}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SM_Wep_Pistol_Heavy_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60219,7 +60204,7 @@ GameObject:
   - component: {fileID: 3014416787314790447}
   - component: {fileID: 3014416787315560463}
   - component: {fileID: 3014416787316560591}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SM_Wep_Pistol_Heavy_Hammer_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60561,7 +60546,7 @@ GameObject:
   - component: {fileID: 4232710993080357657}
   - component: {fileID: 8829348318986528381}
   - component: {fileID: 8679048715861774449}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62005,7 +61990,7 @@ GameObject:
   - component: {fileID: 6947433488672285015}
   - component: {fileID: 8835236366383633184}
   - component: {fileID: 4343358751332783404}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Object Canvas (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63172,7 +63157,7 @@ GameObject:
   - component: {fileID: 9216129271850213318}
   - component: {fileID: 419538381709602432}
   - component: {fileID: 947551195263785329}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: g_RetopoGroup2_RetopoGroup2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63238,7 +63223,7 @@ GameObject:
   - component: {fileID: 2789794186172991156}
   - component: {fileID: 7441817735849569660}
   - component: {fileID: 3444536800458455038}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MuzzleFlashPraticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71447,7 +71432,7 @@ GameObject:
   - component: {fileID: 8269928238054391091}
   - component: {fileID: 2675831216427978778}
   - component: {fileID: 1493314710223966525}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: g_RetopoGroup1_RetopoGroup1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

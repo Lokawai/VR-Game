@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4279868661517618027}
   - component: {fileID: 4706576681229548077}
   - component: {fileID: 5306649573560831452}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: g_RetopoGroup2_RetopoGroup2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 7076340740932571673}
   - component: {fileID: 2577682605006682577}
   - component: {fileID: 7732138059599553363}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MuzzleFlashPraticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4957,7 +4957,7 @@ GameObject:
   - component: {fileID: 3911321901155723678}
   - component: {fileID: 7034929592245994679}
   - component: {fileID: 5780986605286213008}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: g_RetopoGroup1_RetopoGroup1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5041,7 +5041,7 @@ GameObject:
   - component: {fileID: 4936896685786744678}
   - component: {fileID: 4936896685786744679}
   - component: {fileID: 4936896685786744676}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5151,7 +5151,7 @@ GameObject:
   - component: {fileID: 4936896686262215598}
   - component: {fileID: 4936896686262215593}
   - component: {fileID: 4936896686104118221}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Piston
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5306,7 +5306,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936896686784892531}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AttachTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5337,7 +5337,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6094270719778645817}
   - component: {fileID: 3357178275003071017}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MuzzleFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5431,7 +5431,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4830629690710319262}
   - component: {fileID: 4936896687739709211}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: boxeglove_model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5476,7 +5476,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7878552190788476799}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5510,7 +5510,7 @@ GameObject:
   - component: {fileID: 7878552191244223616}
   - component: {fileID: 7878552191240799392}
   - component: {fileID: 7878552191241930336}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SM_Wep_Pistol_Heavy_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5595,7 +5595,7 @@ GameObject:
   - component: {fileID: 7878552191244223618}
   - component: {fileID: 7878552191240799394}
   - component: {fileID: 7878552191241930338}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SM_Wep_Pistol_Heavy_Hammer_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5677,7 +5677,7 @@ GameObject:
   - component: {fileID: 7878552191244223620}
   - component: {fileID: 7878552191240799396}
   - component: {fileID: 7878552191241930340}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SM_Wep_Pistol_Heavy_Mag_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5759,7 +5759,7 @@ GameObject:
   - component: {fileID: 7878552191244223622}
   - component: {fileID: 7878552191240799398}
   - component: {fileID: 7878552191241930342}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SM_Wep_Pistol_Heavy_Slide_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5842,7 +5842,7 @@ GameObject:
   - component: {fileID: 7878552191244223624}
   - component: {fileID: 7878552191240799400}
   - component: {fileID: 7878552191241930344}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SM_Wep_Pistol_Heavy_Trigger_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5932,7 +5932,7 @@ GameObject:
   - component: {fileID: 4936896686980960023}
   - component: {fileID: 4936896686980960017}
   - component: {fileID: 4936896686980960111}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Piston Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8424,6 +8424,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7878552191446888231}
     m_Modifications:
+    - target: {fileID: 3086748919395057419, guid: 9c7d0ea37e729af4ca23aa7dbb674dfe,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4232710992928726045, guid: 9c7d0ea37e729af4ca23aa7dbb674dfe,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -8453,6 +8458,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Object Canvas (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4947433218468362292, guid: 9c7d0ea37e729af4ca23aa7dbb674dfe,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7687126197377084230, guid: 9c7d0ea37e729af4ca23aa7dbb674dfe,
         type: 3}
