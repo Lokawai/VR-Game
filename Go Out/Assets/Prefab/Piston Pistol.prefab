@@ -5197,7 +5197,7 @@ MonoBehaviour:
   ignoreCollision: 0
   collisionLayer:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 471
   activePiston: 0
   extenderObject: {fileID: 4936896685786744677}
   targetObject: {fileID: 4830629690710319262}
@@ -5462,7 +5462,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5206733674397973028}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.45, y: 0.85, z: 0.41}

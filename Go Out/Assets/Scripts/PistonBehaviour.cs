@@ -40,6 +40,7 @@ public class PistonBehaviour : MonoBehaviour
     {
 
     }
+
     private void Update()
     {
         if(activePiston)
@@ -62,13 +63,50 @@ public class PistonBehaviour : MonoBehaviour
             Extend();
             if (!ignoreCollision)
             {
-                RaycastDetection();
+                HitDetection();
             }
         } else if(currentState == PistonState.shrunk)
         {
             Shrunk();
         }
 
+    }
+    private void HitDetection()
+    {
+        RaycastHit hit;
+        CollisionTracker collisionTracker = targetObject.GetComponent<CollisionTracker>();
+        if (collisionTracker != null)
+        {
+            if(collisionTracker.isHit)
+            {
+                if (!((collisionLayer.value & (1 << collisionTracker.hitObject.transform.gameObject.layer)) > 0)) return;
+                if (hitSound != null && audioSource != null)
+                {
+                    audioSource.clip = hitSound;
+                    audioSource.PlayOneShot(hitSound);
+                }
+
+                Destructable destructable = collisionTracker.hitObject.transform.GetComponent<Destructable>();
+                // A collision occurred within the raycast range
+                if (destructable != null)
+                {
+                    Physics.Raycast(targetObject.position, targetObject.up, out hit, 0.1f);
+                    destructable.DestroyObject(hit, hitForce, visualFX, true);
+                }
+                else
+                {
+                    if (visualFX)
+                    {
+                            GameObject fx = Instantiate(visualFX, targetObject.position + (Vector3.forward * -0.1f), Quaternion.identity);
+                        Physics.Raycast(targetObject.position, targetObject.up, out hit, 0.1f);
+                            fx.transform.rotation = Quaternion.LookRotation(targetObject.position.normalized);
+                    }
+                }
+                if (currentState == PistonState.extend)
+                    StartCoroutine(PistonStay());
+                collisionTracker.ResetValue();
+            }
+        }
     }
     private void RaycastDetection()
     {
