@@ -25,6 +25,7 @@ public class eaGetdata : MonoBehaviour
 
     }
 
+
     IEnumerator GetRequest(string uri)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
