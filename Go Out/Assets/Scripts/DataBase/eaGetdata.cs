@@ -13,6 +13,7 @@ public class eaGetdata : MonoBehaviour
     public Transform textContainer; // Parent transform for the spawned text objects
 
     private List<PlayerData> rankingData; // List to store ranking data
+
     void Start()
     {
         // A correct website page.
@@ -52,24 +53,28 @@ public class eaGetdata : MonoBehaviour
                     items = itemsDataString.Split(';');
                     print(GetDataValue(items[0], "Name:"));
                     print(GetDataValue(items[0], "time:") + "s");
-
+                    //Debug.Log(items.Length);
                     //expected data return
                     //ID:0|Name:Health Potion|Type:consumables|Cost:50;
                     //ID:1|Name:Health Potion|Type:consumables|Cost:50;ID:2|Name:Health pill|Type:consumables|Cost:30;ID:3|Name:Poison Pill|Type:consumables|Cost:100;
                     break;
             }
         }
-        DisplayRankingList();
+        AddPlayer();
     }//GetRequest
 
     private void AddPlayer()
     {
-        foreach(string i in items)
+        for(int i = 0; i < items.Length; i++)
         {
-            AddPlayerData(GetDataValue(i, "Name:"), GetDataValue(i, "time:"));
+            AddPlayerData(GetDataValue(items[i], "Name:"), GetDataValue(items[i], "time:"));
+            Debug.Log("Add success");
+            Debug.Log(GetDataValue(items[i], "Name:"));
+            Debug.Log(GetDataValue(items[i], "time:"));
         }
         DisplayRankingList();
     }
+
     private void DisplayRankingList()
     {
 
@@ -100,8 +105,8 @@ public class eaGetdata : MonoBehaviour
         // Add the new player to the rankingData list
         rankingData.Add(newPlayer);
 
-        // Sort the rankingData based on times (in descending order)
-        rankingData.Sort((a, b) => b.time.CompareTo(a.time));
+        //// Sort the rankingData based on times (in descending order)
+        //rankingData.Sort((a, b) => b.time.CompareTo(a.time));
 
         // Display the updated ranking list
         DisplayRankingList();
