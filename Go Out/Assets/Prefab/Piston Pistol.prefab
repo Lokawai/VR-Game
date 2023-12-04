@@ -5431,6 +5431,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4830629690710319262}
   - component: {fileID: 4936896687739709211}
+  - component: {fileID: 566875894854366318}
   m_Layer: 10
   m_Name: boxeglove_model
   m_TagString: Untagged
@@ -5467,6 +5468,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.45, y: 0.85, z: 0.41}
   m_Center: {x: 0, y: -0.18, z: 0}
+--- !u!114 &566875894854366318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5206733674397973028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb9030412f53986419c7a9aae30da8a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isHit: 0
+  hitObject: {fileID: 0}
 --- !u!1 &7878552190788476792
 GameObject:
   m_ObjectHideFlags: 0
