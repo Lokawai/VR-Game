@@ -8,17 +8,16 @@ public class eaUser : MonoBehaviour
 {
 
     public string inputUsername;
-    public UnityEngine.UI.Text messageText;
     public TextMeshProUGUI Te;
     public float inputTime;
     public InputActionAsset TestAsset;
     public InputAction testAction;
     InputActionMap gameplayActionMap;
     string CreateUserURL = "http://localhost:80/dev/php/eaUser.php";
-
+    TimeManager timeManager;
     private void Start()
     {
-
+        timeManager = GameManager.Singleton.GetComponent<TimeManager>();
         var gameplayActionMap = TestAsset.FindActionMap("SpaceAction");
         testAction = gameplayActionMap.FindAction("Space");
         testAction.performed += callCreateUser;
@@ -37,7 +36,7 @@ public class eaUser : MonoBehaviour
     }    
     public void ButtonCall()
     {
-        StartCoroutine(CreateUser(inputUsername, inputTime));
+        StartCoroutine(CreateUser(inputUsername, timeManager.TimeRemain));
     }
 
     IEnumerator CreateUser(string username, float time)

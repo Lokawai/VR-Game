@@ -8,6 +8,7 @@ public class TimeManager : MonoBehaviour
 {
     [Header("Unit: second")]
     [SerializeField] private NetworkVariable<float> m_TimeRemain = new NetworkVariable<float>();
+    public float TimeRemain { get { return m_TimeRemain.Value; } }
     [SerializeField] private float m_MaxTime = 600;
     [SerializeField] private bool isActive = false;
     [SerializeField] private UnityEvent m_EndTimeEvent;
